@@ -1,9 +1,18 @@
 from enum import Enum
-
-from typing import Union
-
+from typing import Union, List
 from fastapi import FastAPI
 from pydantic import BaseModel
+
+class Flavour(str, Enum):
+    """_summary_
+
+    Args:
+        str (_type_): _description_
+        Enum (_type_): _description_
+    """
+    HOPPY = "Hoppy"
+    CHOCOLATE = "Chocolate"
+    CARAMEL = "Caramel"
 
 
 class Beer(BaseModel):
@@ -15,8 +24,8 @@ class Beer(BaseModel):
     name: str
     brewer: str
     strength: float
-    flavours: Union[list, None] = None
-    
+    flavours: Union[List[Flavour], None] = None
+
 beerapi = FastAPI()
 
 @beerapi.post("/beers/")
