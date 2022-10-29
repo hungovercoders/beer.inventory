@@ -26,11 +26,10 @@ class Beer(BaseModel):
     strength: float = Field(example=5.2)
     flavours: Union[List[Flavour], None] = Field(default=None
                                                  ,example=["Caramel"])
-    
+
     def __getitem__(self, item):
         return getattr(self, item)
-    
- 
+
 beer_list = []
 beer1 = Beer(name="Mike Rayer",brewer="Crafty Devil",strength=4.6, flavours=["Caramel"])
 beer_list.append(beer1)
