@@ -2,13 +2,29 @@
 
 Fun API that you can submit and retrieve booze from.
 
+## Pre Requisities
+
+* VS Code
+* Python
+* Python extension pack VS code
+* Pylance - then in settings
+
+```json
+{
+  "python.analysis.typeCheckingMode": "basic"
+}
+```
+
 ## Usage
 
 * Clone git repo.
+* Choose demo you want to try and change to that directory
+  * cd demos/flask
+  * cd demos/fastapi
 * Create python environment
 
 ```bash
-python venv -venv
+python -m venv venv 
 ```
 
 * Initialise environment
