@@ -16,16 +16,17 @@ class Flavour(str, Enum):
     ORANGE = "Orange"
     
 class Beer(BaseModel):
-    """_summary_
+    """This is a beer
 
     Args:
         BaseModel (_type_): _description_
     """
-    name: str = Field(example="Mike Rayer")
-    brewer: str = Field(example="Crafty Devil")
-    strength: float = Field(example=5.2)
+    name: str = Field(example="Mike Rayer",description="This is the name of the beer")
+    brewer: str = Field(example="Crafty Devil",description="This is the name of the brewer of the beer")
+    strength: float = Field(example=5.2,description="This is the strength of the alcohol in the beer")
     flavours: Union[List[Flavour], None] = Field(default=None
-                                                 ,example=["Caramel"])
+                                                 ,example=["Caramel"]
+                                                 ,description="These are the lists of flavours in the beer")
 
     def __getitem__(self, item):
         return getattr(self, item)
@@ -81,7 +82,6 @@ async def get_beers():
     Returns:
         _type_: _description_
     """
-
     return beer_list
 
 @beerapi.get("/beers/{name}/")
