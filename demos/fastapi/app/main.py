@@ -35,9 +35,9 @@ beer_list = []
 beer1 = Beer(name="Mike Rayer",brewer="Crafty Devil",strength=4.6, flavours=["Caramel"])
 beer_list.append(beer1)
 
-beerapi = FastAPI()
+app = FastAPI()
 
-@beerapi.post("/beers/")
+@app.post("/beers/")
 async def create_beer(response: Response, beer: Beer= Body(
         examples={
             "normal": {
@@ -75,7 +75,7 @@ async def create_beer(response: Response, beer: Beer= Body(
         content = f'Beer "{beer.name}" Already Exists.'
     return content
 
-@beerapi.get("/beers/")
+@app.get("/beers/")
 async def get_beers():
     """_summary_
 
@@ -84,7 +84,7 @@ async def get_beers():
     """
     return beer_list
 
-@beerapi.get("/beers/{name}/")
+@app.get("/beers/{name}/")
 async def get_beer(name: str):
     """_summary_
 
@@ -98,7 +98,7 @@ async def get_beer(name: str):
         return f'Beer "{name}" does not exist.'
     return beer
 
-@beerapi.delete("/beers/{name}/")
+@app.delete("/beers/{name}/")
 async def delete_beer(name: str):
     """_summary_
 

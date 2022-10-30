@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+
+    <body>
+        <h1>Beers</h1>
+        <ul> 
+        </ul>
+    </body>
+    <script>
+    
+        fetch('https://dv-beerapi-webapp-eun-dgrf.azurewebsites.net/beers/')
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                data.forEach(beer => {
+                    const markup = `<li><b>Name:</b>${beer.name}, <b>Brewer:</b> ${beer.brewer}, <b>Strength:</b> ${beer.strength}</li>`;
+                    document.querySelector('ul').insertAdjacentHTML('beforeend',markup);
+
+                })
+            })
+            .catch(error => console.log(error))
+    </script>
+</html>
