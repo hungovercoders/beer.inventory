@@ -39,25 +39,25 @@ class BeerList(UserList):
     """This is a beer list. Acting as an in-memory data store for demos.
 
     Args:
-        UserList: _description_
+        UserList: Inherited from collections
     """
 
     def __init__(self, iterable):
-        """_summary_
+        """Starts a collection of an iterable object
 
         Args:
-            iterable (_type_): _description_
+            iterable (_type_): An object that can be iterated over_
         """
         super().__init__(self._validate_beer(item) for item in iterable)
 
     def append(self, item):
-        """_summary_
+        """Adds a beer item
 
         Args:
-            item (_type_): _description_
+            item (_type_): A beer object
 
         Returns:
-            _type_: _description_
+            boolean: Whether item was added or not
         """
         if item not in self:
             self.data.append(self._validate_beer(item))
@@ -65,13 +65,13 @@ class BeerList(UserList):
         return False
 
     def remove(self, item):
-        """_summary_
+        """Removes a beer
 
         Args:
-            item (_type_): _description_
+            item (_type_): A beer object
 
         Returns:
-            _type_: _description_
+            boolean: Whether item was removed or not
         """
         if item in self:
             self.data.remove(self._validate_beer(item))
@@ -79,16 +79,16 @@ class BeerList(UserList):
         return False
 
     def _validate_beer(self, value):
-        """_summary_
+        """Validates item is a Beer object
 
         Args:
-            value (_type_): _description_
+            value (_type_): Object to be validated
 
         Raises:
-            TypeError: _description_
+            TypeError: Errors if object is not beer
 
         Returns:
-            _type_: _description_
+            Beer: Beer object if valid 
         """
         if isinstance(value, (Beer)):
             return value
@@ -96,13 +96,13 @@ class BeerList(UserList):
             f"beer object expected, got {type(value).__name__}")
 
     def get_beer_by_name(self, name) -> Optional[Beer]:
-        """_summary_
+        """Gets beer from list by name
 
         Args:
-            name (_type_): _description_
+            name (string): The name of the beer
 
         Returns:
-            Optional[Beer]: _description_
+            Optional[Beer]: The beer that matches the beer name
         """
         beer = None
         try:
@@ -113,28 +113,28 @@ class BeerList(UserList):
         return beer
 
     def get_beer_index_by_name(self, name) -> Optional[int]:
-        """_summary_
+        """Gets beer index in the list by its name
 
         Args:
-            name (_type_): _description_
+            name (string): The name of the beer
 
         Returns:
-            Optional[int]: _description_
+            Optional[int]: The index position of the beer in the list
         """
+        beer_index = None
         beer = self.get_beer_by_name(name)
         if beer is not None:
-            beer_index = None
             for idx, item in enumerate(self):
                 if beer["name"] in item["name"]:
                     beer_index = idx
-            return beer_index
+        return beer_index
 
     def set_beer_by_name(self, name, beer):
-        """_summary_
+        """Updates the beer in the list by its name
 
         Args:
-            name (_type_): _description_
-            beer (_type_): _description_
+            name (string): The name of the beer
+            beer (Beer): The Beer object to be updated to
         """
         if beer.name != name:
             raise ValueError("You cannot alter the name of a beer as \
@@ -144,13 +144,15 @@ class BeerList(UserList):
             super().__setitem__(index, beer)
             return True
         self.append(beer)
+        return False
 
     def remove_beer_by_name(self, name):
-        """_summary_
+        """Removes the beer from the list by its name
 
         Args:
-            name (_type_): _description_
+            name (string): The name of the beer
         """
         beer = self.get_beer_by_name(name)
         if beer is not None:
             return self.remove(beer)
+        return True
