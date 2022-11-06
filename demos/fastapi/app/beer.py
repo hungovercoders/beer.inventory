@@ -25,7 +25,7 @@ class Beer(BaseModel):
                       ,description="This is the name of the beer")
     brewer: str = Field(example="Crafty Devil"
                         ,description="This is the name of the brewer of the beer")
-    strength: float = Field(example=5.2
+    strength: float = Field(gt=0,lt=100,example=5.2
                             ,description="This is the strength of the alcohol in the beer")
     flavours: Union[List[Flavour], None] = Field(default=None
                                                  ,example=["Caramel"]
@@ -137,8 +137,8 @@ class BeerList(UserList):
             beer (Beer): The Beer object to be updated to
         """
         if beer.name != name:
-            raise ValueError("You cannot alter the name of a beer as \
-                             this is the unique identifier.")
+            error = "You cannot alter the name of a beer as this is the unique identifier."
+            raise ValueError(error)
         index = self.get_beer_index_by_name(name)
         if index is not None:
             super().__setitem__(index, beer)
