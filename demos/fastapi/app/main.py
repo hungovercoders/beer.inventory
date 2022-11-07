@@ -1,4 +1,4 @@
-from beer import Beer, Flavour, BeerList
+from .beer import Beer, Flavour, BeerList
 from fastapi import FastAPI, status, Response, Body
 
 
