@@ -1,2 +1,4 @@
 demos/flask/venv/*
 demos/fastapi/venv/*
+demos/docker/venv/*
+demos/faker/venv/*

@@ -2,6 +2,7 @@ from fastapi import FastAPI, status, Response, Body
 from pydantic import BaseModel, Field
 from typing import Union, List
 from enum import Enum
+from fastapi.routing import APIRoute
 
 class Flavour(str, Enum):
     """This is a flavour of a beer
@@ -38,7 +39,18 @@ beer_list.append(beer1)
 beer2 = Beer(name="Stay Puft",brewer="Tiny Rebel",strength=4.8)
 beer_list.append(beer2)
 
-app = FastAPI()
+def custom_generate_unique_id(route: APIRoute):
+    """https://fastapi.tiangolo.com/advanced/generate-clients/#custom-generate-unique-id-function
+
+    Args:
+        route (APIRoute): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    return f"{route.tags[0]}-{route.name}"
+
+app = FastAPI(generate_unique_id_function=custom_generate_unique_id)
 
 @app.get("/")
 async def root():
@@ -59,76 +71,77 @@ async def get_beers(response: Response):
     response.status_code=status.HTTP_200_OK
     return beer_list
 
-@app.post("/beers/")
-async def create_beer(response: Response, beer: Beer= Body(
-        examples={
-            "normal": {
-                "summary": "A normal example",
-                "description": "A **normal** item works correctly.",
-                "value": {
-                    "name": "Elvis Juice",
-                    "brewer": "Brewdog",
-                    "strength": 4.6
-                },
-            },
-             "beerTooStrong": {
-                "summary": "Too strong beer fails",
-                "description": "This is a beer with a strength above 100%.",
-                "value": {
-                    "name": "Elvis Juice",
-                    "brewer": "Brewdog",
-                    "strength": 101.0
-                },
-            },
-            "beerTooWeak": {
-                "summary": "Too weak beer fails",
-                "description": "This is a beer with a strength below 0%.",
-                "value": {
-                    "name": "Elvis Juice",
-                    "brewer": "Brewdog",
-                    "strength": -1.0
-                },
-            },
-            "invalidMissingStrength": {
-                "summary": "Beers without a strength are rejected",
-                "description": "Beers without a strength are rejected",
-                "value": {
-                    "name": "Mike Rayer",
-                    "brewer": "Crafty Devil"
-                },
-            },
-            "beerGoodFlavour": {
-                "summary": "Good flavour addition",
-                "description": "This is a beer with an allowable list of flavours",
-                "value": {
-                    "name": "Old Abbot",
-                    "brewer": "Hogwarts",
-                    "strength": 5.0,
-                    "flavours": ["Orange","Caramel"],
-                },
-            },
-            "beerBadFlavour": {
-                "summary": "Good flavour addition",
-                "description": "This is a beer with an allowable list of flavours",
-                "value": {
-                    "name": "Hobgoblin",
-                    "brewer": "Wychwood",
-                    "strength": 4.3,
-                    "flavours": ["Orange","Toothpaste"],
-                },
-            }
-        },
-    )):
-    """Creates a new beer
+# @app.post("/beers/")
+# async def create_beer(response: Response, beer: Beer= Body(
+#         examples={
+#             "normal": {
+#                 "summary": "A normal example",
+#                 "description": "A **normal** item works correctly.",
+#                 "value": {
+#                     "name": "Elvis Juice",
+#                     "brewer": "Brewdog",
+#                     "strength": 4.6
+#                 },
+#             },
+#              "beerTooStrong": {
+#                 "summary": "Too strong beer fails",
+#                 "description": "This is a beer with a strength above 100%.",
+#                 "value": {
+#                     "name": "Elvis Juice",
+#                     "brewer": "Brewdog",
+#                     "strength": 101.0
+#                 },
+#             },
+#             "beerTooWeak": {
+#                 "summary": "Too weak beer fails",
+#                 "description": "This is a beer with a strength below 0%.",
+#                 "value": {
+#                     "name": "Elvis Juice",
+#                     "brewer": "Brewdog",
+#                     "strength": -1.0
+#                 },
+#             },
+#             "invalidMissingStrength": {
+#                 "summary": "Beers without a strength are rejected",
+#                 "description": "Beers without a strength are rejected",
+#                 "value": {
+#                     "name": "Mike Rayer",
+#                     "brewer": "Crafty Devil"
+#                 },
+#             },
+#             "beerGoodFlavour": {
+#                 "summary": "Good flavour addition",
+#                 "description": "This is a beer with an allowable list of flavours",
+#                 "value": {
+#                     "name": "Old Abbot",
+#                     "brewer": "Hogwarts",
+#                     "strength": 5.0,
+#                     "flavours": ["Orange","Caramel"],
+#                 },
+#             },
+#             "beerBadFlavour": {
+#                 "summary": "Good flavour addition",
+#                 "description": "This is a beer with an allowable list of flavours",
+#                 "value": {
+#                     "name": "Hobgoblin",
+#                     "brewer": "Wychwood",
+#                     "strength": 4.3,
+#                     "flavours": ["Orange","Toothpaste"],
+#                 },
+#             }
+#         },
+#     )):
+#     """Creates a new beer
 
-    Args:
-        beer (Beer): A beer object with the properties specified in the schemas.
+#     Args:
+#         beer (Beer): A beer object with the properties specified in the schemas.
 
-    Returns:
-        string: Description of whether beer is added.
-    """
-    if beer not in beer_list:
-        beer_list.append(beer) 
-        content = f'Beer "{beer.name}" Added.'
-        response.status_code=status.HTTP_201_CREATED
-        return content
+#     Returns:
+#         string: Description of whether beer is added.
+#     """
+#     response.status_code=status.HTTP_200_OK
+#     if beer not in beer_list:
+#         beer_list.append(beer)
+#         content = f'Beer "{beer.name}" Added.'
+#         response.status_code=status.HTTP_201_CREATED
+#         return content
