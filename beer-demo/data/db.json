@@ -1,0 +1,25 @@
+{
+  "beers": [
+    {
+      "name": "Stay Puft",
+      "brewer": "Tiny Rebel",
+      "strength": 4.8,
+      "flavours": null,
+      "id": 2
+    },
+    {
+      "name": "beer",
+      "brewer": "mikabrew",
+      "strength": "5.7",
+      "flavours": "",
+      "id": 3
+    },
+    {
+      "name": "griff brew",
+      "brewer": "griff",
+      "strength": "10",
+      "flavours": "",
+      "id": 4
+    }
+  ]
+}

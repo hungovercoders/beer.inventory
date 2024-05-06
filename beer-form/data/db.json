@@ -1,0 +1,25 @@
+{
+  "beers": [
+    {
+      "name": "Mike Rayer",
+      "brewer": "Crafty Devil",
+      "strength": 4.6,
+      "flavours": null,
+      "id": 1
+    },
+    {
+      "name": "Stay Puft",
+      "brewer": "Tiny Rebel",
+      "strength": 4.8,
+      "flavours": null,
+      "id": 2
+    },
+    {
+      "name": "beer",
+      "brewer": "mikabrew",
+      "strength": "5.7",
+      "flavours": "",
+      "id": 3
+    }
+  ]
+}
